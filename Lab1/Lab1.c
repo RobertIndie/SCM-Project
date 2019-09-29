@@ -1,21 +1,21 @@
 /**
- * Copyright (C) ç”µå­1172-æ¨å­æ£µ IDï¼š201711611231
+ * Copyright (C) µç×Ó1172-Ñî×Ó¿Ã ID£º201711611231
  * Project repo: https://github.com/RobertIndie/SCM-Project
- * å•ç‰‡æœºä½œä¸š
+ * µ¥Æ¬»ú×÷Òµ
  */
 #include <reg51.h>
 
 #define true 1
 
 sbit P3_7 = P3 ^ 7;
-//æŸ¥è¡¨æ³•æ˜¾ç¤ºæ•°å­—
+//²é±í·¨ÏÔÊ¾Êı×Ö
 unsigned char code table[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66,
                               0x6d, 0x7d, 0x07, 0x7f, 0x6f};
-//å½“å‰çš„è®¡æ•°å€¼
+//µ±Ç°µÄ¼ÆÊıÖµ
 unsigned char count;
 
-// å»¶è¿Ÿ
-// å»¶è¿Ÿ time ms ï¼ˆ12MHzä¸‹ï¼‰
+// ÑÓ³Ù
+// ÑÓ³Ù time ms £¨12MHzÏÂ£©
 void delay(unsigned int time) {
   unsigned int j = 0;
   for (; time > 0; time--)
@@ -28,14 +28,14 @@ void main(void) {
   P0 = table[count / 10];
   P2 = table[count % 10];
   while (true) {
-    //æ£€æµ‹æŒ‰é”®æŒ‰ä¸‹
+    //¼ì²â°´¼ü°´ÏÂ
     if (!P3_7) {
-      delay(10);//å»¶æ—¶10msæ”¾æŠ–åŠ¨
+      delay(10);  //ÑÓÊ±10ms·ÀÖ¹¶¶¶¯
       if (!P3_7) {
-        count++;//è®¡æ•°
+        count++;  //¼ÆÊı
         if (count == 100) count = 0;
-        P0 = table[count / 10];//æ˜¾ç¤ºåä½
-        P2 = table[count % 10];//æ˜¾ç¤ºä¸ªä½
+        P0 = table[count / 10];  //ÏÔÊ¾Ê®Î»
+        P2 = table[count % 10];  //ÏÔÊ¾¸öÎ»
         while (!P3_7)
           ;
       }
