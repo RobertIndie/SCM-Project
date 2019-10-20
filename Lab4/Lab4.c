@@ -5,10 +5,11 @@
  */
 #include <reg51.h>
 
-// LED显示子模
+// LED显示字模
 char led_mod[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07,
                   0x7f, 0x6f, 0x77, 0x7c, 0x58, 0x5e, 0x79, 0x71};
 sbit D1 = P3 ^ 0;
+// 延时
 void delay(unsigned int time) {
   unsigned char j = 250;
   for (; time > 0; time--) {
@@ -16,7 +17,7 @@ void delay(unsigned int time) {
       ;
   }
 }
-key0() interrupt 0 {
+key0() interrupt 0 {  // K0中断，字符0-9循环
   unsigned char i;
   D1 = !IE0;
   for (i = 0; i <= 9; i++) {
@@ -25,10 +26,10 @@ key0() interrupt 0 {
   }
   P2 = 0X40;
 }
-key1() interrupt 2 {
+key1() interrupt 2 {  // K1中断，字符0-9循环
   unsigned char i;
   for (i = 0; i <= 9; i++) {
-    D1 = !IE0;
+    D1 = !IE0;  //检测K0中断状态，并输出状态
     P1 = led_mod[i];
     delay(35000);
   }
@@ -36,8 +37,8 @@ key1() interrupt 2 {
 }
 void main() {
   unsigned char i;
-  TCON = 0X05;
-  PX0 = 0;
+  TCON = 0X05;  //设置为脉冲触发方式
+  PX0 = 0;      //设置中断优先级，使得INT1中断优先
   PX1 = 1;
   D1 = 1;
   P1 = P2 = 0X40;
