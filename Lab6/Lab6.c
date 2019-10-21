@@ -21,7 +21,7 @@ void delay(unsigned int time) {
 }
 
 void PrintTime() {
-  delay(10);  //需要延时，否则在仿真环境下无法正常输出
+  delay(10);  //需要在主线程环境下延时，否则在仿真环境下无法正常输出
   P3 = 0x01;
   P2 = led_mod[ctime % 10];
   delay(10);
