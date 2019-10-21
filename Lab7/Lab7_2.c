@@ -15,7 +15,7 @@ char recv = 0;
 bufio() interrupt 4 {
   if (TI == 1) {
     TI = 0;
-    P2 = led_mod[recv];
+    P2 = led_mod[recv];  //发送完后显示数据
   }
   if (RI == 1) {
     RI = 0;
@@ -26,13 +26,12 @@ bufio() interrupt 4 {
 
 void main() {
   TMOD = 0x20;
-  TH1 = TL1 = 0xf4;
+  TH1 = TL1 = 0xf4;  //设置波特率
   PCON = 0;
   SCON = 0x50;
-  TR1 = 1;
+  TR1 = 1;  //启动计时器
   EA = 1;
   ES = 1;
-  SBUF = counter;
   while (1)
     ;
 }
